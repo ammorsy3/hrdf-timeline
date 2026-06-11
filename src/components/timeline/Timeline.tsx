@@ -151,7 +151,7 @@ export default function Timeline({ milestones }: Props) {
                 >
                   {/* Sticky lane label */}
                   <div
-                    className="sticky left-0 z-10 shrink-0 flex items-center px-3 border-r border-border"
+                    className="shrink-0 flex items-center px-3 border-r border-border"
                     style={{
                       width: LANE_LABEL_W,
                       height: laneH,
