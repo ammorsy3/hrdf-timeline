@@ -15,20 +15,25 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
-    });
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
 
-    if (res.ok) {
-      router.push("/");
-      router.refresh();
-    } else {
-      const data = await res.json();
-      setError(data.error ?? "حدث خطأ، حاول مجدداً");
+      if (res.ok) {
+        router.push("/");
+        router.refresh();
+      } else {
+        const data = await res.json();
+        setError(data.error ?? "حدث خطأ، حاول مجدداً");
+      }
+    } catch {
+      setError("حدث خطأ في الاتصال، حاول مجدداً");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   return (
