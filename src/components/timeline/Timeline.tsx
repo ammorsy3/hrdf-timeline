@@ -8,6 +8,31 @@ import TimelineLegend from "./TimelineLegend";
 
 const LANE_LABEL_W = 120; // px — sticky label column width
 const TRACK_MIN_W = 1000; // px — minimum scrollable track width
+const ROW_H = 44; // px per stacked row (bar 36px + 8px gap)
+const LANE_PAD = 8; // px top/bottom padding inside a lane
+
+function assignRows(deliverables: Milestone["deliverables"]): Map<string, number> {
+  const rowMap = new Map<string, number>();
+  const rowEnds: number[] = [];
+  for (const d of deliverables) {
+    const { leftPct, widthPct } = getGanttPosition(d.startDate, d.endDate);
+    const end = leftPct + widthPct;
+    let placed = false;
+    for (let r = 0; r < rowEnds.length; r++) {
+      if (leftPct >= rowEnds[r] - 0.5) {
+        rowMap.set(d.id, r);
+        rowEnds[r] = end;
+        placed = true;
+        break;
+      }
+    }
+    if (!placed) {
+      rowMap.set(d.id, rowEnds.length);
+      rowEnds.push(end);
+    }
+  }
+  return rowMap;
+}
 
 interface Props {
   milestones: Milestone[];
@@ -115,75 +140,84 @@ export default function Timeline({ milestones }: Props) {
             </div>
 
             {/* Milestone lanes */}
-            {milestones.map((milestone, mi) => (
-              <div
-                key={milestone.id}
-                className={`relative flex border-b border-border last:border-0 ${mi % 2 === 0 ? "bg-white" : "bg-[#F9FAFB]"}`}
-              >
-                {/* Sticky lane label */}
+            {milestones.map((milestone, mi) => {
+              const rowMap = assignRows(milestone.deliverables);
+              const numRows = Math.max(1, ...Array.from(rowMap.values()).map((r) => r + 1));
+              const laneH = numRows * ROW_H + LANE_PAD * 2;
+              return (
                 <div
-                  className="sticky left-0 z-10 shrink-0 flex items-center px-3 py-4 border-r border-border"
-                  style={{
-                    width: LANE_LABEL_W,
-                    backgroundColor: mi % 2 === 0 ? "#ffffff" : "#F9FAFB",
-                  }}
+                  key={milestone.id}
+                  className={`relative flex border-b border-border last:border-0 ${mi % 2 === 0 ? "bg-white" : "bg-[#F9FAFB]"}`}
                 >
-                  <div className="flex flex-col gap-0.5" style={{ direction: "rtl" }}>
-                    <span className="text-[11px] font-bold leading-tight" style={{ color: milestone.color }}>
-                      {formatNum(milestone.orderIndex)}. {milestone.title}
-                    </span>
+                  {/* Sticky lane label */}
+                  <div
+                    className="sticky left-0 z-10 shrink-0 flex items-center px-3 border-r border-border"
+                    style={{
+                      width: LANE_LABEL_W,
+                      height: laneH,
+                      backgroundColor: mi % 2 === 0 ? "#ffffff" : "#F9FAFB",
+                    }}
+                  >
+                    <div className="flex flex-col gap-0.5" style={{ direction: "rtl" }}>
+                      <span className="text-[11px] font-bold leading-tight" style={{ color: milestone.color }}>
+                        {formatNum(milestone.orderIndex)}. {milestone.title}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Track */}
+                  <div className="relative flex-1" style={{ minWidth: TRACK_MIN_W, height: laneH }}>
+                    {/* Today line */}
+                    {todayPct >= 0 && todayPct <= 100 && (
+                      <div
+                        className="absolute top-0 bottom-0 w-px bg-red-400/60 z-10 pointer-events-none"
+                        style={{ left: `${todayPct}%` }}
+                      />
+                    )}
+
+                    {/* Deliverable bars */}
+                    {milestone.deliverables.map((d) => {
+                      const { leftPct, widthPct } = getGanttPosition(d.startDate, d.endDate);
+                      const row = rowMap.get(d.id) ?? 0;
+                      const topPx = LANE_PAD + row * ROW_H;
+                      const color = milestone.color;
+                      const isDone = d.status === "done";
+                      return (
+                        <div
+                          key={d.id}
+                          className="absolute h-9 rounded-lg flex items-center px-2 overflow-hidden"
+                          style={{
+                            left: `${leftPct}%`,
+                            width: `${widthPct}%`,
+                            top: topPx,
+                            minWidth: 8,
+                            backgroundColor: isDone ? color : `${color}33`,
+                            border: `1.5px solid ${color}`,
+                          }}
+                          title={d.title}
+                        >
+                          <span
+                            className="text-[10px] font-semibold truncate leading-none"
+                            style={{
+                              color: isDone ? "#fff" : color,
+                              direction: "rtl",
+                            }}
+                          >
+                            {isDone && "✓ "}{d.title}
+                          </span>
+
+                          {/* Status dot */}
+                          <div
+                            className="absolute left-1.5 top-1.5 w-2 h-2 rounded-full shrink-0"
+                            style={{ backgroundColor: STATUS_COLORS[d.status] }}
+                          />
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
-
-                {/* Track */}
-                <div className="relative flex-1" style={{ minWidth: TRACK_MIN_W, height: 72 }}>
-                  {/* Today line */}
-                  {todayPct >= 0 && todayPct <= 100 && (
-                    <div
-                      className="absolute top-0 bottom-0 w-px bg-red-400/60 z-10 pointer-events-none"
-                      style={{ left: `${todayPct}%` }}
-                    />
-                  )}
-
-                  {/* Deliverable bars */}
-                  {milestone.deliverables.map((d) => {
-                    const { leftPct, widthPct } = getGanttPosition(d.startDate, d.endDate);
-                    const color = milestone.color;
-                    const isDone = d.status === "done";
-                    return (
-                      <div
-                        key={d.id}
-                        className="absolute top-4 h-9 rounded-lg flex items-center px-2 overflow-hidden"
-                        style={{
-                          left: `${leftPct}%`,
-                          width: `${widthPct}%`,
-                          minWidth: 8,
-                          backgroundColor: isDone ? color : `${color}33`,
-                          border: `1.5px solid ${color}`,
-                        }}
-                        title={d.title}
-                      >
-                        <span
-                          className="text-[10px] font-semibold truncate leading-none"
-                          style={{
-                            color: isDone ? "#fff" : color,
-                            direction: "rtl",
-                          }}
-                        >
-                          {isDone && "✓ "}{d.title}
-                        </span>
-
-                        {/* Status dot */}
-                        <div
-                          className="absolute left-1.5 top-1.5 w-2 h-2 rounded-full shrink-0"
-                          style={{ backgroundColor: STATUS_COLORS[d.status] }}
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
+              );
+            })}
 
             {/* Today marker label at bottom */}
             <div
