@@ -217,16 +217,21 @@ export default function Timeline({ milestones }: Props) {
                           >
                             {formatDateAr(d.startDate)} — {formatDateAr(d.endDate)}
                           </div>
-                          <span
-                            className="text-[10px] font-semibold whitespace-nowrap leading-none"
-                            style={{
-                              color: isDone ? "#fff" : color,
-                              direction: "rtl",
-                            }}
-                          >
-                            {isDone && "✓ "}{d.title}
-                          </span>
-
+                          <div className="flex items-center gap-1.5">
+                            <div
+                              className="w-2 h-2 rounded-full shrink-0"
+                              style={{ backgroundColor: STATUS_COLORS[d.status] }}
+                            />
+                            <span
+                              className="text-[10px] font-semibold whitespace-nowrap leading-none"
+                              style={{
+                                color: isDone ? "#fff" : color,
+                                direction: "rtl",
+                              }}
+                            >
+                              {isDone && "✓ "}{d.title}
+                            </span>
+                          </div>
                         </div>
                       );
                     })}
