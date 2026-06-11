@@ -7,7 +7,7 @@ import { STATUS_COLORS } from "@/lib/status";
 import TimelineLegend from "./TimelineLegend";
 
 const LANE_LABEL_W = 120; // px — sticky label column width
-const TRACK_MIN_W = 1000; // px — minimum scrollable track width
+const TRACK_MIN_W = 1800; // px — minimum scrollable track width
 const ROW_H = 44; // px per stacked row (bar 36px + 8px gap)
 const LANE_PAD = 8; // px top/bottom padding inside a lane
 
