@@ -185,19 +185,19 @@ export default function Timeline({ milestones }: Props) {
                       return (
                         <div
                           key={d.id}
-                          className="absolute h-9 rounded-lg flex items-center px-2 overflow-hidden"
+                          className="absolute h-9 rounded-lg flex items-center px-2"
                           style={{
                             left: `${leftPct}%`,
-                            width: `${widthPct}%`,
+                            width: `max(${widthPct}%, auto)`,
+                            minWidth: "max-content",
                             top: topPx,
-                            minWidth: 8,
                             backgroundColor: isDone ? color : `${color}33`,
                             border: `1.5px solid ${color}`,
                           }}
                           title={d.title}
                         >
                           <span
-                            className="text-[10px] font-semibold truncate leading-none"
+                            className="text-[10px] font-semibold whitespace-nowrap leading-none"
                             style={{
                               color: isDone ? "#fff" : color,
                               direction: "rtl",
