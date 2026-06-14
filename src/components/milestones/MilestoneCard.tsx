@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { getMilestoneRollup } from "@/lib/status";
-import { formatDateAr } from "@/lib/date";
+import { formatDateShort } from "@/lib/date";
 import DeliverableRow from "./DeliverableRow";
 import type { Milestone } from "@/data/campaign";
 
@@ -59,8 +59,8 @@ export default function MilestoneCard({ milestone, defaultOpen = true, isAdmin }
               {milestone.title}
             </h3>
             {startDate && endDate && (
-              <p className="text-xs text-muted-foreground">
-                {formatDateAr(startDate)} — {formatDateAr(endDate)}
+              <p className="text-xs text-muted-foreground" dir="ltr">
+                {formatDateShort(startDate)} — {formatDateShort(endDate)}
               </p>
             )}
           </div>

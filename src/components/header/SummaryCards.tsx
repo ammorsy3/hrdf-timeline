@@ -1,5 +1,5 @@
-import { CalendarDays, CalendarCheck, Clock3, Milestone } from "lucide-react";
-import { getDaysLeft, getNextKeyDate, formatDateAr, formatNum } from "@/lib/date";
+import { CalendarDays, CalendarCheck, Milestone } from "lucide-react";
+import { getNextKeyDate, formatDateAr } from "@/lib/date";
 import { PROJECT } from "@/data/campaign";
 import type { Deliverable, ApprovalGate } from "@/data/campaign";
 
@@ -42,11 +42,10 @@ function Card({
 
 export default function SummaryCards({ deliverables, gates }: Props) {
   const today = new Date();
-  const daysLeft = getDaysLeft(today);
   const next = getNextKeyDate(deliverables, gates, today);
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+    <div className="grid grid-cols-3 gap-3 sm:gap-4">
       <Card
         icon={CalendarDays}
         label="تاريخ البدء"
@@ -58,12 +57,6 @@ export default function SummaryCards({ deliverables, gates }: Props) {
         label="تاريخ الانتهاء"
         value={formatDateAr(PROJECT.endDate)}
         accent="#E8EFF8"
-      />
-      <Card
-        icon={Clock3}
-        label="الأيام المتبقية"
-        value={`${formatNum(daysLeft)} يوم`}
-        accent="#FFF3E0"
       />
       <Card
         icon={Milestone}

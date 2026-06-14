@@ -1,5 +1,5 @@
 import { ExternalLink } from "lucide-react";
-import { formatDateAr } from "@/lib/date";
+import { formatDateShort } from "@/lib/date";
 import AdminControls from "@/components/admin/AdminControls";
 import type { Deliverable } from "@/data/campaign";
 
@@ -17,8 +17,8 @@ export default function DeliverableRow({ deliverable: d, isAdmin }: Props) {
           <p className="text-sm font-semibold text-foreground leading-snug">
             {d.title}
           </p>
-          <p className="text-xs text-muted-foreground">
-            {formatDateAr(d.startDate)} — {formatDateAr(d.endDate)}
+          <p className="text-xs text-muted-foreground" dir="ltr">
+            {formatDateShort(d.startDate)} — {formatDateShort(d.endDate)}
           </p>
         </div>
 

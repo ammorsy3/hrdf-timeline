@@ -48,6 +48,16 @@ export function formatDateAr(dateStr: string): string {
   }).format(d);
 }
 
+/** Short Arabic date, no year, LTR digits: ١ يونيو */
+export function formatDateShort(dateStr: string): string {
+  const d = parseISO(dateStr);
+  return new Intl.DateTimeFormat("ar-u-nu-arab", {
+    day: "numeric",
+    month: "long",
+    calendar: "gregory",
+  }).format(d);
+}
+
 /** Short Arabic month name: يونيو */
 export function formatMonthAr(date: Date): string {
   return new Intl.DateTimeFormat("ar-u-nu-arab", {
