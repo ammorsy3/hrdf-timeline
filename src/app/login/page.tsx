@@ -42,7 +42,7 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="flex flex-col items-center gap-3">
           <Image
-            src="/images/hrdf.png"
+            src="/images/hrdf-logo.png"
             alt="صندوق تنمية الموارد البشرية"
             width={180}
             height={80}
