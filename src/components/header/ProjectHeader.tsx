@@ -15,7 +15,7 @@ export default function ProjectHeader({ deliverables, gates }: Props) {
       {/* Top bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
         <Image
-          src="/images/hrdf-logo.png"
+          src="/images/hrdf.png"
           alt="صندوق تنمية الموارد البشرية"
           width={140}
           height={56}
