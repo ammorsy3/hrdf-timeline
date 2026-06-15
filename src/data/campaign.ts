@@ -62,7 +62,7 @@ export const LAUNCH_EVENTS: LaunchEvent[] = [
 // ── APPROVAL GATES (timeline diamonds) ───────────────────────────────────────
 
 export const APPROVAL_GATES: ApprovalGate[] = [
-  { id: "gate-1", label: "اعتماد الصندوق", date: "2026-07-16" },
+  { id: "gate-1", label: "اعتماد الصندوق", date: "2026-07-26" },
   { id: "gate-2", label: "اعتماد الصندوق", date: "2026-08-15" },
   { id: "gate-3", label: "اعتماد الصندوق", date: "2026-08-25" },
 ];

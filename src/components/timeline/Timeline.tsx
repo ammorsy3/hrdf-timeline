@@ -201,8 +201,8 @@ export default function Timeline({ milestones }: Props) {
                           className="group absolute h-9 rounded-lg flex items-center px-2"
                           style={{
                             ...(nearEnd
-                              ? { left: `${leftPct}%`, right: `${rightPct}%` }
-                              : { left: `${leftPct}%`, width: `${widthPct}%` }),
+                              ? { left: `${leftPct}%`, right: `calc(${rightPct}% + 3px)` }
+                              : { left: `${leftPct}%`, width: `calc(${widthPct}% - 3px)` }),
                             minWidth: "max-content",
                             top: topPx,
                             backgroundColor: isDone ? color : `${color}33`,
