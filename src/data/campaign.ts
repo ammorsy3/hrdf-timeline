@@ -53,8 +53,8 @@ export const LAUNCH_EVENTS: LaunchEvent[] = [
   {
     id: "launch-1",
     label: "إطلاق الحملة الإعلانية",
-    startDate: "2026-10-01",
-    endDate: "2026-12-31",
+    startDate: "2026-09-01",
+    endDate: "2026-12-01",
     color: "#4FA45C",
   },
 ];
@@ -62,9 +62,9 @@ export const LAUNCH_EVENTS: LaunchEvent[] = [
 // ── APPROVAL GATES (timeline diamonds) ───────────────────────────────────────
 
 export const APPROVAL_GATES: ApprovalGate[] = [
-  { id: "gate-1", label: "اعتماد الصندوق", date: "2026-06-30" },
-  { id: "gate-2", label: "اعتماد الصندوق", date: "2026-08-06" },
-  { id: "gate-3", label: "اعتماد الصندوق", date: "2026-08-20" },
+  { id: "gate-1", label: "اعتماد الصندوق", date: "2026-07-16" },
+  { id: "gate-2", label: "اعتماد الصندوق", date: "2026-08-15" },
+  { id: "gate-3", label: "اعتماد الصندوق", date: "2026-08-25" },
 ];
 
 // ── MILESTONES & DELIVERABLES ─────────────────────────────────────────────────
@@ -83,23 +83,31 @@ export const MILESTONES: Milestone[] = [
         id: "d-1-1",
         title: "ملف التوجهات الإبداعية",
         startDate: "2026-06-01",
-        endDate: "2026-06-23",
+        endDate: "2026-06-17",
+        status: "not_started",
+        driveUrl: null,
+      },
+      {
+        id: "d-1-4",
+        title: "التوجه الإبداعي النهائي المعتمد",
+        startDate: "2026-06-17",
+        endDate: "2026-07-10",
         status: "not_started",
         driveUrl: null,
       },
       {
         id: "d-1-2",
         title: "إنتاج الفيديو الرئيسي للحملة",
-        startDate: "2026-07-01",
-        endDate: "2026-07-30",
+        startDate: "2026-07-16",
+        endDate: "2026-08-15",
         status: "not_started",
         driveUrl: null,
       },
       {
         id: "d-1-3",
         title: "إنتاج المواد الداعمة للحملة",
-        startDate: "2026-07-01",
-        endDate: "2026-07-30",
+        startDate: "2026-07-16",
+        endDate: "2026-08-15",
         status: "not_started",
         driveUrl: null,
       },
@@ -148,16 +156,16 @@ export const MILESTONES: Milestone[] = [
       {
         id: "d-3-1",
         title: "ملف خطة الترويج وآلية الاعتمادات",
-        startDate: "2026-08-02",
-        endDate: "2026-08-13",
+        startDate: "2026-08-15",
+        endDate: "2026-08-25",
         status: "not_started",
         driveUrl: null,
       },
       {
         id: "d-3-3",
         title: "إطلاق الحملة الإعلانية",
-        startDate: "2026-10-01",
-        endDate: "2026-12-31",
+        startDate: "2026-09-01",
+        endDate: "2026-12-01",
         status: "not_started",
         driveUrl: null,
       },
