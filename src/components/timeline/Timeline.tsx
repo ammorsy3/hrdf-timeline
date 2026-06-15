@@ -198,39 +198,45 @@ export default function Timeline({ milestones }: Props) {
                       return (
                         <div
                           key={d.id}
-                          className="group absolute h-9 rounded-lg flex items-center px-2"
+                          className="group absolute h-9"
                           style={{
                             ...(nearEnd
                               ? { left: `${leftPct}%`, right: `calc(${rightPct}% + 3px)` }
                               : { left: `${leftPct}%`, width: `calc(${widthPct}% - 3px)` }),
                             top: topPx,
-                            overflow: "hidden",
-                            backgroundColor: isDone ? color : `${color}33`,
-                            border: `1.5px solid ${color}`,
                           }}
                           title={d.title}
                         >
-                          {/* Date tooltip */}
+                          {/* Date tooltip — outside overflow:hidden so it isn't clipped */}
                           <div
                             className="absolute bottom-full mb-1.5 px-2 py-1 bg-gray-900/90 text-white text-[10px] rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity z-30 pointer-events-none"
                             style={{ direction: "rtl", [nearEnd ? "right" : "left"]: 0 }}
                           >
                             {formatDateAr(d.startDate)} — {formatDateAr(d.endDate)}
                           </div>
-                          <div className="flex items-center gap-1.5 min-w-0">
-                            <div
-                              className="w-2 h-2 rounded-full shrink-0"
-                              style={{ backgroundColor: STATUS_COLORS[d.status] }}
-                            />
-                            <span
-                              className="text-[10px] font-semibold whitespace-nowrap leading-none truncate"
-                              style={{
-                                color: isDone ? "#fff" : color,
-                                direction: "rtl",
-                              }}
-                            >
-                              {isDone && "✓ "}{d.title}
-                            </span>
+                          {/* Bar — overflow:hidden keeps label from expanding beyond date bounds */}
+                          <div
+                            className="w-full h-full rounded-lg flex items-center px-2 overflow-hidden"
+                            style={{
+                              backgroundColor: isDone ? color : `${color}33`,
+                              border: `1.5px solid ${color}`,
+                            }}
+                          >
+                            <div className="flex items-center gap-1.5 min-w-0">
+                              <div
+                                className="w-2 h-2 rounded-full shrink-0"
+                                style={{ backgroundColor: STATUS_COLORS[d.status] }}
+                              />
+                              <span
+                                className="text-[10px] font-semibold whitespace-nowrap leading-none truncate"
+                                style={{
+                                  color: isDone ? "#fff" : color,
+                                  direction: "rtl",
+                                }}
+                              >
+                                {isDone && "✓ "}{d.title}
+                              </span>
+                            </div>
                           </div>
                         </div>
                       );

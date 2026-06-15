@@ -90,7 +90,7 @@ export const MILESTONES: Milestone[] = [
       {
         id: "d-1-4",
         title: "التوجه الإبداعي النهائي المعتمد",
-        startDate: "2026-06-17",
+        startDate: "2026-06-18",
         endDate: "2026-07-10",
         status: "not_started",
         driveUrl: null,
