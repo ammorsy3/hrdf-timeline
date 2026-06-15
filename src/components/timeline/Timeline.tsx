@@ -203,8 +203,8 @@ export default function Timeline({ milestones }: Props) {
                             ...(nearEnd
                               ? { left: `${leftPct}%`, right: `calc(${rightPct}% + 3px)` }
                               : { left: `${leftPct}%`, width: `calc(${widthPct}% - 3px)` }),
-                            minWidth: "max-content",
                             top: topPx,
+                            overflow: "hidden",
                             backgroundColor: isDone ? color : `${color}33`,
                             border: `1.5px solid ${color}`,
                           }}
@@ -217,13 +217,13 @@ export default function Timeline({ milestones }: Props) {
                           >
                             {formatDateAr(d.startDate)} — {formatDateAr(d.endDate)}
                           </div>
-                          <div className="flex items-center gap-1.5">
+                          <div className="flex items-center gap-1.5 min-w-0">
                             <div
                               className="w-2 h-2 rounded-full shrink-0"
                               style={{ backgroundColor: STATUS_COLORS[d.status] }}
                             />
                             <span
-                              className="text-[10px] font-semibold whitespace-nowrap leading-none"
+                              className="text-[10px] font-semibold whitespace-nowrap leading-none truncate"
                               style={{
                                 color: isDone ? "#fff" : color,
                                 direction: "rtl",
